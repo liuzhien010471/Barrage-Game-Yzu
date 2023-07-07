@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/jquery-ui.css">
+
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/jquery-ui.js"></script>
+    <script src="./assets/js/jquery.min.js"></script>
+    <script src="./assets/js/popper.min.js"></script>
+
+    <style>
+        *{
+            margin: 0;
+            box-sizing: border-box;
+            
+        }
+        canvas{
+            overflow: hidden; 
+            width: 100%;
+            height: 100%;
+            background-color: #9E785D;
+            z-index: -1;
+        }
+        div{
+            position:absolute;
+        }
+        .row{
+            width: 100%;
+            height: 100%;   
+        }
+        .left-Right{
+            
+        }
+        .left{
+            width: 250px;
+            background-color: #FFEED5;
+            height: 100vh;
+            border-width: 0px 20px 0px 0px;
+            border-style: solid;
+            border-color: #301509;
+            z-index: 2;
+        }
+        .right{
+            right: 0px;
+            width: 350px;
+            background-color: #542F1F;
+            height: 100vh;
+            border-width: 0px 0px 0px 20px;
+            border-style: solid;
+            border-color: #301509;
+            z-index: 5;
+        }
+        .up{
+            width: 100%;
+            background-color: #4E3128;
+            height: 80px;
+            border-width: 0px 0px 10px 0px;
+            border-style: solid;
+            border-color: yellow;
+            z-index: 10;
+        }
+        .down{
+            top:calc(100vh - 90px);
+            width: 100%;
+            background-color: #4E3128;
+            height: 90px;
+            border-width: 10px 0px 0px 0px;
+            border-style: solid;
+            border-color: yellow;
+            z-index: 3;
+        }
+        .qus{
+            top:calc(100vh - 180px);
+            width: 100%;
+            background-color: #4E3128;
+            height: 90px;
+            z-index: 1;
+            border-width: 10px 0px 0px 0px;
+            border-style: solid;
+            border-color: yellow;
+        }
+        .btn{
+            background-color: #30705D;
+            border: 10px solid yellow;
+            height: 50px;
+            border-radius: 50px;
+            margin-right: 20px;
+            font-size: 22px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .text{
+            /* transform: translate(0px,-7px); */
+        }
+    </style>
+
+    <script>
+        $(document).ready(function(){
+            /** @type {HTMLCanvasElement} */
+            var canvas = document.getElementById("canvas");
+            var context = canvas.getContext("2d");
+
+            canvas.width = window.innerWidth; // 畫布寬 = 視窗內的寬
+            canvas.height = window.innerHeight; // 畫布高 = 視窗內的高
+
+            context.strokeStyle="black";
+            context.arc(150,150,50,0,6.28);
+            context.stroke();
+            PaintBoss();
+
+
+            window.onresize = onSizeChange;//監控size改變時呼叫此function
+
+            //及時調整畫布為螢幕大小
+            function onSizeChange(){
+                canvas.width = window.innerWidth; // 畫布寬 = 視窗內的寬
+                canvas.height = window.innerHeight; // 畫布高 = 視窗內的高
+            }
+
+            function PaintMonster(){
+                
+            }
+
+            function PaintBoss(){
+                context.fillStyle = "gray";
+                context.lineWidth = 5;
+                context.beginPath();
+                context.arc(canvas.width/2,canvas.height/4,200,0,2*Math.PI);
+                context.closePath();
+                context.fill();
+                context.stroke();
+
+            }
+        });
+
+
+
+    </script>
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row left-Right">
+            <div class="left">left</div>
+            <div class="right">right</div>
+        </div>
+        <div class="row up-Down ">
+            <div class="up">upbar</div>
+            <div class="down row align-items-center justify-content-start">
+                <button class="col-2 btn">按鈕</button>
+                <button class="col-2 btn">按鈕</button>
+            </div>
+            <div class="qus row align-items-center justify-content-center">
+                <button class="col-1 btn"><div class="text">按鈕</div></button>
+                <button class="col-1 btn"><div class="text">按鈕</div></button>
+                <button class="col-1 btn"><div class="text">按鈕</div></button>
+                <button class="col-1 btn"><div class="text">按鈕</div></button>
+            </div>
+        </div>
+        
+    </div>
+    
+
+
+    <canvas id="canvas" width="window.width" height="width.height" style="border: 2px solid;"></canvas>
+
+
+</body>
+</html>
