@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            background-color:darkolivegreen;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="750px" height="500px" style="border: 2px solid;"></canvas>
+
+
+    <script src="num.js"></script>
+    <script>
+        var r=5;
+
+        var endTime = new Date(2023,6,15,18,47,52);
+        var curShowTimesSecounds = 0;
+
+        var ball={ x:300 , y:70 , r:20 , g:2 , vx:-3 , vy:0 , color:"blue"};
+
+        var balls=[];
+        const color = ["red","yellow","tomato","green","pink","orange","burlywood","darkolivegreen"];
+
+        window.onload = function(){
+            /** @type {HTMLCanvasElement} */
+            var canvas = document.getElementById("canvas");
+            var context = canvas.getContext("2d");
+
+            context.strokeStyle="black";
+            context.stroke();
+
+
+            curShowTimesSecounds = getCurrentShowTimesSecounds();
+            setInterval(//逐格更新
+                function(){
+                    context.clearRect(0,0,context.canvas.width,context.canvas.height);//清除畫布
+                    render(context);
+                    ballsUpdate(context);
+                    update(context);
+                },
+                50
+            );
+            
+        };
+
+        //定期更新數據
+        function update(cxt){
+            var nextShowTimesSecounds = getCurrentShowTimesSecounds();
+
+            var nextHour = parseInt(nextShowTimesSecounds / 3600);
+            var nextMin = parseInt((nextShowTimesSecounds - nextHour*3600) / 60);
+            var nextSec = nextShowTimesSecounds % 60;
+
+            var hour = parseInt(curShowTimesSecounds / 3600);
+            var min = parseInt((curShowTimesSecounds - hour*3600) / 60);
+            var sec = curShowTimesSecounds % 60;
+
+            //尋找新更新的數字並創造球
+            if(nextSec != sec){
+                if(parseInt(hour/10) != parseInt(nextHour/10)){
+                    addBalls(30,100,parseInt(nextHour/10),cxt);
+                }
+                if(parseInt(hour%10) != parseInt(nextHour%10)){
+                    addBalls(30 + 15*(r+1),100,parseInt(nextHour%10),cxt);
+                }
+
+                if(parseInt(min/10) != parseInt(nextMin/10)){
+                    addBalls(30 + 39*(r+1),100,parseInt(nextMin/10),cxt);
+                }
+                if(parseInt(min%10) != parseInt(nextMin%10)){
+                    addBalls(30 + 54*(r+1),100,parseInt(nextMin%10),cxt);
+                }
+
+                if(parseInt(sec/10) != parseInt(nextSec/10)){
+                    addBalls(30 + 78*(r+1),100,parseInt(nextSec/10),cxt);
+                }
+                if(parseInt(sec%10) != parseInt(nextSec%10)){
+                    addBalls(30 + 93*(r+1),100,parseInt(nextSec%10),cxt);
+                }
+                curShowTimesSecounds = nextShowTimesSecounds;
+            }
+
+            console.log(balls.length);
+            ClearBalls();
+        }
+
+        
+        function ClearBalls(){
+            var cnt=0;
+            for(var i=0;i<balls.length;i++){
+                if(balls[i].x + balls[i].r>0 && balls[i].x - balls[i].r<canvas.width){
+                    balls[cnt]=balls[i];
+                    cnt++;
+                }
+
+                // if(balls[i].x - balls[i].r<0){
+                    
+                // }else if(balls[i].x + balls[i].r>canvas.width){
+
+                // }
+            }
+            while(cnt<balls.length){
+                balls.pop();
+            }
+        }
+
+        //更新單球
+        function ballUpdate(cxt){
+            ball.x += ball.vx;
+            ball.y += ball.vy;
+            ball.vy += ball.g;
+            ball.vx = ball.vx*0.995;
+
+            cxt.fillStyle = "blue";
+            cxt.beginPath();
+            cxt.arc(ball.x,ball.y,ball.r,0,2*Math.PI);
+            cxt.closePath();
+            cxt.fill();
+
+            if(ball.y >= cxt.canvas.height-ball.r){
+                ball.vy = -ball.vy*0.5;
+            }
+        }
+
+        //更新球的移動
+        function ballsUpdate(cxt){
+            for(var i = 0;i<balls.length;i++){
+                balls[i].x += balls[i].vx;
+                balls[i].y += balls[i].vy;
+                balls[i].vy += balls[i].g;
+                balls[i].vx = balls[i].vx*0.995;
+
+                cxt.fillStyle = balls[i].color;
+                cxt.beginPath();
+                cxt.arc(balls[i].x,balls[i].y,balls[i].r,0,2*Math.PI);
+                cxt.closePath();
+                cxt.fill();
+
+                if(balls[i].y >= cxt.canvas.height-balls[i].r){
+                    balls[i].vy = -balls[i].vy*0.7;
+                    if(Math.abs(balls[i].vy) < 2){
+                        balls[i].vy=0;
+                        balls[i].y=canvas.height - balls[i].r;
+                    }
+                }
+            }
+            
+        }
+
+        //創建新球
+        function addBalls(x,y,numn,cxt){
+
+            for(var i =0;i<num[numn].length;i++){
+                for(var j =0;j<num[numn][i].length;j++){
+                    if(num[numn][i][j] == 1){
+                        var aBall= {
+                            x:x+j*2*(1+r)+(r+1),
+                            y:y+i*2*(1+r)+(r+1),
+                            g:1.5+Math.random(),
+                            r:5,
+                            vx:Math.pow(-1 , Math.ceil(Math.random()*1000))*4,
+                            vy:-5,
+                            color:color[ Math.floor(Math.random()*color.length)]
+                        }
+                        balls.push(aBall);
+
+                    }
+                }
+            }
+        }
+
+
+        function getCurrentShowTimesSecounds(){
+            var curTimes = new Date();
+            var ret = endTime.getTime() - curTimes.getTime();
+            ret = Math.round( ret/1000 );
+
+            return ret >= 0 ? ret : 0;
+        }
+
+
+        function render(cxt){
+
+            var hour = 12;
+            var min = 36;
+            var sec = 28;
+
+            var hour = parseInt(curShowTimesSecounds / 3600);
+            var min = parseInt((curShowTimesSecounds - hour*3600) / 60);
+            var sec = curShowTimesSecounds % 60;
+
+            renderNum(30,100,parseInt(hour/10),cxt);
+            renderNum(30+15*(r+1),100,hour%10,cxt);
+            renderNum(30+30*(r+1),100,10,cxt);
+            renderNum(30+39*(r+1),100,parseInt(min/10),cxt);
+            renderNum(30+54*(r+1),100,min%10,cxt);
+            renderNum(30+69*(r+1),100,10,cxt);
+            renderNum(30+78*(r+1),100,parseInt(sec/10),cxt);
+            renderNum(30+93*(r+1),100,sec%10,cxt);
+
+
+        }
+
+        
+        function renderNum(x,y,numn,cxt){
+            /** @type {HTMLCanvasElement} */
+            cxt.fillStyle = "blue";
+            
+
+            for(var i =0;i<num[numn].length;i++){
+                for(var j =0;j<num[numn][i].length;j++){
+                    if(num[numn][i][j] == 1){
+                        cxt.beginPath();
+                        cxt.arc(x+j*2*(1+r)+(r+1),y+i*2*(1+r)+(r+1),r,0,2*Math.PI);
+                        cxt.closePath();
+                        cxt.fill();
+                    }
+                }
+            }
+        }
+        
+    </script>
+</body>
+</html>

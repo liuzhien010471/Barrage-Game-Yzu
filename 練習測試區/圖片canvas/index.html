@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="./js/code.createjs.com_1.0.0_createjs.min.js"></script>
+    <script>
+        window.onload = function(){
+            var img = [];//宣告圖片資源陣列
+            var stage = new createjs.Stage("canvas");
+            var canvas = document.getElementById("canvas");
+
+            //載入圖片
+            function Loader(){
+
+                //圖片資源陣列
+                var manifest = [
+                {src:"./img/001.jpg",id:"medamaoyaji"},
+                {src:"./img/1.bmp",id:"02"}
+                ];
+
+                //創建載入圖片
+                var loader = new createjs.LoadQueue(false);
+                loader.loadManifest(manifest,true);
+                //監聽載入序列
+                loader.addEventListener("fileload", fileload);
+                //監聽載入完成
+                loader.addEventListener("complete", complete);
+
+
+                function fileload(event){
+                    if (event.item.type == "image"){
+                        img[event.item.id] = event.result;
+                    }
+                }
+
+                //載入完成刪除監聽並執行渲染函式
+                function complete(event){
+                    event.target.removeEventListener("fileload",fileload);
+                    event.target.removeEventListener("complete",complete);
+                    init();
+                }
+
+            }
+
+            //渲染圖片
+            function init(){
+                
+                // let bg = new createjs.Shape();
+                // bg.graphics.beginFill("black").drawRect(0,0,500,300);
+                // stage.addChild(bg);
+
+                var img1 = new createjs.Bitmap(img["medamaoyaji"]);
+                stage.addChild(img1);
+                img1.x = 50;
+                img1.y = 50;
+                img1.scaleX = 0.5;
+                img1.scaleY = 0.5;
+
+                stage.update();
+                
+                //渲染後才呼叫準心渲染，避免準心被蓋住
+                Crosshair();
+            }
+
+            function Crosshair(){
+
+                // 建立準心（Crosshair）物件
+                var crosshair = new createjs.Shape();
+                crosshair.graphics.setStrokeStyle(1);
+                crosshair.graphics.beginStroke("red");
+                crosshair.graphics.moveTo(-10, 0).lineTo(10, 0);
+                crosshair.graphics.moveTo(0, -10).lineTo(0, 10);
+
+                // 將準心放置在舞台中央
+                crosshair.x = canvas.width / 2;
+                crosshair.y = canvas.height / 2;
+                stage.addChild(crosshair);
+
+                stage.update();
+
+                // canvas.addEventListener("mousemove", handleMouseMove(event,crosshair));
+                canvas.addEventListener("mousemove", function(event){
+                    handleMouseMove(event,crosshair);
+                });
+            }
+
+              // 滑鼠移動事件處理函式
+            function handleMouseMove(event,crosshair) {
+                // 更新準心的位置為滑鼠的位置
+                crosshair.x = event.clientX - canvas.offsetLeft;
+                crosshair.y = event.clientY - canvas.offsetTop;
+
+                // 更新舞台
+                stage.update();
+            }
+
+            Loader();
+            
+            
+        };
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="700" height="500"></canvas>
+
+</body>
+</html>
