@@ -139,7 +139,7 @@
 
                 let bg = new createjs.Shape();
                 bg.graphics.beginFill("black").drawCircle(canvas.width/2,canvas.height/4,150);
-                stage.addChild(bg);
+                // stage.addChild(bg);
                 console.log(canvas.height + "w = " + canvas.width)
                 stage.update();
 
@@ -155,7 +155,8 @@
                 //圖片資源陣列
                 var manifest = [
                 {src:"./assets/img/001.jpg",id:"medamaoyaji"},
-                {src:"./assets/img/1.bmp",id:"02"}
+                {src:"./assets/img/1.bmp",id:"02"},
+                {src:"./assets/img/monster.jpeg",id:"monster"}
                 ];
 
                 //創建載入圖片
@@ -189,12 +190,12 @@
                 // bg.graphics.beginFill("black").drawRect(0,0,500,300);
                 // stage.addChild(bg);
 
-                var img1 = new createjs.Bitmap(img["medamaoyaji"]);
+                var img1 = new createjs.Bitmap(img["monster"]);
                 stage.addChild(img1);
-                img1.x = 50;
-                img1.y = 50;
-                img1.scaleX = 0.1;
-                img1.scaleY = 0.1;
+                img1.x = canvas.width/2-150;
+                img1.y = canvas.height/4-120;
+                img1.scaleX = 0.8;
+                img1.scaleY = 0.8;
 
                 stage.update();
                 
