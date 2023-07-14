@@ -112,7 +112,9 @@
             canvas.width = window.innerWidth; // 畫布寬 = 視窗內的寬
             canvas.height = window.innerHeight; // 畫布高 = 視窗內的高
 
-           
+            var img = [];//宣告圖片資源陣列
+            var stage = new createjs.Stage("canvas");
+            var canvas = document.getElementById("canvas");
 
 
             window.onresize = onSizeChange;//監控size改變時呼叫此function
@@ -145,10 +147,7 @@
 
             }
 
-            var img = [];//宣告圖片資源陣列
-            var stage = new createjs.Stage("canvas");
-            var canvas = document.getElementById("canvas");
-
+        
             //載入圖片
             function Loader(){
 
@@ -156,7 +155,8 @@
                 var manifest = [
                 {src:"./assets/img/001.jpg",id:"medamaoyaji"},
                 {src:"./assets/img/1.bmp",id:"02"},
-                {src:"./assets/img/monster.jpeg",id:"monster"}
+                {src:"./assets/img/monster.jpeg",id:"monster"},
+                {src:"./assets/img/gun.jpg",id:"gun"}
                 ];
 
                 //創建載入圖片
@@ -213,6 +213,16 @@
                 crosshair.graphics.moveTo(-10, 0).lineTo(10, 0);
                 crosshair.graphics.moveTo(0, -10).lineTo(0, 10);
 
+                //槍枝
+                var gun = new createjs.Bitmap(img["gun"]);
+                stage.addChild(gun);
+                gun.regX = gun.image.width / 2; // 設定圖片中心為 X 軸中心點
+                gun.regY = gun.image.height / 2; // 設定圖片中心為 Y 軸中心點
+                gun.x = canvas.width-400;
+                gun.y = canvas.height-200;
+                gun.scaleX = 0.2;
+                gun.scaleY = 0.2;
+
                 // 將準心放置在舞台中央
                 crosshair.x = canvas.width / 2;
                 crosshair.y = canvas.height / 2;
@@ -222,17 +232,31 @@
 
                 // canvas.addEventListener("mousemove", handleMouseMove(event,crosshair));
                 canvas.addEventListener("mousemove", function(event){
-                    handleMouseMove(event,crosshair);
+                    handleMouseMove(event,crosshair,gun);
                 });
             }
 
               // 滑鼠移動事件處理函式
-            function handleMouseMove(event,crosshair) {
+            function handleMouseMove(event,crosshair,gun) {
                 // 更新準心的位置為滑鼠的位置
                 crosshair.x = event.clientX - canvas.offsetLeft;
                 crosshair.y = event.clientY - canvas.offsetTop;
+                GunRotate(event,gun);
 
                 // 更新舞台
+                stage.update();
+            }
+
+            function GunRotate(event, gun) {
+                // 計算滑鼠位置與槍枝圖片位置之間的角度
+                var dx = event.clientX - canvas.offsetLeft - gun.x;
+                var dy = event.clientY - canvas.offsetTop - gun.y;
+                var radians = Math.atan2(dy, dx);
+                var degrees = radians * (180 / Math.PI);
+                
+                // 將角度應用於槍枝圖片的旋轉
+                gun.rotation = degrees+180;
+
                 stage.update();
             }
 
