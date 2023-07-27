@@ -1,0 +1,170 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+canvas{
+    overflow: hidden; 
+    /* width: 100%;
+    height: 100%; */
+    background-color: #9E785D;
+    z-index: -1;
+}
+#canvas-con{
+    height: 90%;
+}
+#qus-con{
+    height: 10%;
+
+}
+div{
+    /* position:absolute; */
+    /* opacity: 0.4; */
+    opacity: 1;
+}
+.row{
+    width: 100%;
+    height: 100%;   
+    --bs-gutter-x:0;
+    --bs-gutter-y:0;
+}
+
+/* 放題目 */
+.left{
+    /* min-width: 15%;
+    max-width: 20%; */
+    background-color: #FFEED5;
+    height: 85vh;
+    border-width: 0px 20px 0px 0px;
+    border-style: solid;
+    border-color: #301509;
+    z-index: 5;
+
+}
+/* 訊息以及成員 */
+.right{
+    /* right: 0px; */
+    /* min-width: 15%;
+    max-width: 20%; */
+    background-color: #542F1F;
+    height: 85vh;
+    border-width: 0px 0px 0px 20px;
+    border-style: solid;
+    border-color: #301509;
+    z-index: 5;
+
+}
+/* 選擇題 */
+.qus{
+    /* top:calc(100vh - 180px); */
+    width: 100%;
+    background-color: #4E3128;
+    height: 100%;
+    z-index: 1;
+    border-width: 10px 0px 0px 0px;
+    border-style: solid;
+    border-color: yellow;
+
+}
+/* 上方資訊條 */
+.up{
+    width: 100%;
+    background-color: #4E3128;
+    height: 7vh;
+    border-width: 0px 0px 10px 0px;
+    border-style: solid;
+    border-color: yellow;
+    z-index: 10;
+}
+/* 畫布以及問題 */
+.center{
+    height: 85vh;
+}
+/* 下方資訊條 */
+.down{
+    top:calc(100vh - 90px);
+    width: 100%;
+    background-color: #4E3128;
+    height: 8vh;
+    border-width: 10px 0px 0px 0px;
+    border-style: solid;
+    border-color: yellow;
+    z-index: 3;
+}
+.btn{
+    background-color: #30705D;
+    border: 10px solid yellow;
+    height: 50px;
+    border-radius: 50px;
+    margin-right: 20px;
+    font-size: 22px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ----------以下為對話框----------- */
+
+#chatroom-parent{
+    background-color: white;
+    border-radius: 10px;
+    margin: 30px;
+    padding: 20px;
+    height: calc(100% - 60px);
+    width: calc(100% - 60px);
+}
+
+#message-con{
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+hr{
+    margin-bottom: 2px;
+}
+
+.message-username{
+    font-weight:bold;
+    font-size: 13px;
+}
+.message-username-self{
+    font-weight:bold;
+    color:#30705D;
+    font-size: 13px;
+}
+.message-time{
+
+    color: gray;
+    font-size: 12px;
+}
+.message{
+    /* padding-left: 7px; */
+    font-size: 13px;
+}
+.tab-content{
+    /* height: 95%; */
+}
+#chatroom-Tab-Content{
+    padding: 5px;
+    height: 95%;
+}
+#chatroom{
+    height: 100%;
+}
+#chatroom-con{
+    max-height: 100%;
+    overflow-y: scroll;
+    word-break: break-all;
+}
+.message-input-con{
+    margin-top: 10px;
+    bottom: 0;
+}
+#message-input{
+    width: 100%;
+    border-radius: 50px;
+    padding: 3px;
+    padding-left: 13px;
+    padding-right: 13px;
+}
+/* ----------以上為對話框---------- */
