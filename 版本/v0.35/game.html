@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>彈幕化遊戲</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="version" content="0.30">
+
+    <!-- -------------套件載入-------------- -->
+    <link rel="stylesheet" href="./assets/css/suite/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/suite/jquery-ui.css">
+    <link rel="stylesheet" href="./assets/css/suite/switchBtn.css">
+
+    <script src="./assets/js/suite/jquery.min.js"></script>
+    <script src="./assets/js/suite/jquery-ui.js"></script>
+    <script src="./assets/js/suite/bootstrap.min.js"></script>
+    <script src="./assets/js/suite/popper.min.js"></script>
+    <script src="./assets/js/suite/code.createjs.com_1.0.0_createjs.min.js"></script>
+    <!-- --------------套件載入------------- -->
+
+
+    <!-- -----------------專案載入------------------ -->
+    <link rel="stylesheet" href="./assets/css/game-ui copy.css">
+    <script src="./assets/js/canvas.js"></script>
+    <script src="./assets/js/chatroom.js"></script>
+    <script src="./assets/js/game-ui.js"></script>
+    <script src="./assets/js/ui-controler.js"></script>
+    <script src="./assets/js/question.js"></script>
+
+    <style>
+        .up-var{
+            position: fixed;
+            width: 100vw;
+            height: 8vh;
+            background-color: aqua;
+            z-index: 5;
+        }
+        .down-con{
+            position: fixed;
+            width: 100vw;
+            height: 25vh;
+            background-color: rgb(45, 56, 104);
+            bottom: 0;
+            z-index: 5;
+        }
+        .qus-con{
+            position: fixed;
+            width: calc(100vw - 20vw - 24vw);
+            right: 24vw;
+            background-color: bisque;
+            height: 15vh;
+            bottom: 25vh;
+            z-index: 5;
+        }
+        .left-con{
+            display: flex;
+            position: fixed;
+            width: 20vw;
+            background-color:brown;
+            height: calc(100vh - 8vh - 25vh);
+            top: 8vh;
+            left: 0vw;
+            z-index: 5;
+        }
+        .right-con{
+            position: fixed;
+            width: 24vw;
+            background-color:brown;
+            height: calc(100vh - 8vh - 25vh);
+            top: 8vh;
+            right: 0vw;
+            z-index: 5;
+        }
+        .qus{
+            width: 100%;
+            height: 40%;
+            text-align: center;
+            padding-top: 10px;
+        }
+        .options-con{
+            width: 100%;
+            height: 60%;
+            padding-left: 20px;
+            /* padding-right: 10px; */
+        }
+    </style>
+</head>
+<body>
+    <var class="up-var">
+
+    </var>
+
+    <div class="left-con">
+        <div id="output" style="margin: 10px;color: white;width: 90%;"></div>
+        <div id="left-put-away" style="height: 100%; width: 10%;;background-color: rgb(114, 30, 30);right: 0;"></div>
+    </div>
+
+    <div class="right-con" style="display: flex;">
+        <div id="right-put-away" style="height: 100%; width: 7%;;background-color: rgb(114, 30, 30);">
+
+        </div>
+        <div id="chatroom-parent" style="width: 90%;">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="chatroom-tab" data-bs-toggle="tab" data-bs-target="#chatroom" type="button" 
+                  role="tab" aria-controls="chatroom" aria-selected="true">聊天室</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="member-tab" data-bs-toggle="tab" data-bs-target="#member" type="button" 
+                  role="tab" aria-controls="member" aria-selected="false">成員</button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="chatroom-Tab-Content">
+                <div class="tab-pane fade show active row" id="chatroom" role="tabpanel" aria-labelledby="chatroom-tab">
+                    <div class="" style="height: calc(100% - 40px - 45px - 10px);">
+                        <div class="flex-column" id="chatroom-con" style="height: auto;">
+                            <!-- 其他人的對話 -->
+                            <div class="col row" id="message-con">
+                                <div class="col-3 message-username">王建民</div>
+                                <div class="col-9 message-time">12:00</div>
+                                <div class="col-12 message">您好歡迎光臨</div>
+                            </div>
+                            <hr>
+                            <!-- 其他人的對話 -->
+                            <div class="col row" id="message-con">
+                                <div class="col-3 message-username">大谷翔平</div>
+                                <div class="col-9 message-time">12:10</div>
+                                <div class="col-12 message">希望天使進季後賽</div>
+                            </div>
+                            <hr>
+                            <!-- 自己的對話 -->
+                            <div class="col row message-username-self-con" id="message-con">
+                                <div class="col-3 message-username-self" >楚奧特</div>
+                                <div class="col-9 message-time">12:21</div>
+                                <div class="col-12 message">我又受傷了</div>
+                            </div>
+                            <hr>
+                            <!-- 其他人的對話 -->
+                            <div class="col row" id="message-con">
+                                <div class="col-3 message-username">陌生人</div>
+                                <div class="col-9 message-time">12:30</div>
+                                <div class="col-12 message">希望天使進季後賽希望天使進季後賽希望天使進季後賽希望天使進季後賽希望天使進季後賽</div>
+                            </div>
+                            
+                            <hr>
+
+                        </div>
+                    </div>
+
+                    <div class="" style="margin-top: 10px;">
+                        <input type="text" name="輸入訊息" id="message-input">
+
+                        <button id="send-message" style="position: absolute; background-color: transparent; border: 0;">
+                            <img src="./assets/icon/arrow_right_FILL0_wght400_GRAD0_opsz48-01.svg" alt=""
+                            width="22px" height="22px" style="margin-top: 5px;transform: translate(-35px,0);">
+                        </button>
+                    </div>
+
+                    <div class="" style="margin-top: 10px;display: flex;">
+                        <div class="color-btn" color="white" style="background-color: white;"></div>
+                        <div class="color-btn" color="greenyellow" style="background-color: greenyellow;"></div>
+                        <div class="color-btn" color="aqua" style="background-color: aqua;"></div>
+                        <div class="color-btn" color="red" style="background-color: red;"></div>
+                        <input type="checkbox" class="uiswitch" id="toggle-Barrage" now="open" checked>
+                    </div>
+                        
+                </div>
+
+                <div class="tab-pane fade" id="member" role="tabpanel" aria-labelledby="member-tab">
+                    成員
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="qus-con" style="display: flex;flex-direction: column;">
+        <div class="qus" no="">
+            <h3>題目</h3>
+        </div>
+        <div class="options-con row align-items-center">
+            <button class="col btn options" no="1"><div class="text">按鈕1</div></button>
+            <button class="col btn options" no="2"><div class="text">按鈕2</div></button>
+            <button class="col btn options" no="3"><div class="text">按鈕3</div></button>
+            <button class="col btn options" no="4"><div class="text">按鈕4</div></button>
+        </div>
+    </div>
+
+    <div class="down-con">
+        <div id="down-put-away" style="width: 100%;height: 10%;background-color: rgb(15, 15, 63);"></div>
+        <div class="camera-con" >
+            <div class="camera"></div>
+            <div class="camera"></div>
+            <div class="camera"></div>
+            <div class="camera"></div>
+            <div class="camera"></div>
+            <div class="camera"></div>
+            <div class="camera"></div>
+            <div class="camera"></div>
+        </div>
+    </div>
+
+    <!-- 彈幕控制器 -->
+    <div class="barrage-container" id="barrageContainer"></div>
+
+    <canvas id="canvas" width="window.width" height="width.height"></canvas> 
+</body>
+</html>
