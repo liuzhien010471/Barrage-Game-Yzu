@@ -1,0 +1,103 @@
+#bg{
+    background-color: antiquewhite;
+    padding: 5vh 7vw;
+    height: 100vh;
+    display: flex;
+    /* flex-wrap: nowrap; */
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+.back{
+    flex-grow: 0;
+    /* width: calc(100vw - 14vw); */
+    font-size: 28px;
+    font-weight: 600;
+    /* margin-left: 10px; */
+    height: 5vh;
+    margin-bottom: 10px;
+}
+.qustionbank-con{
+    width: calc(100% - 5vw);
+    height: calc(95vh - 10vh - 10px);
+    margin-right: 5vw;
+    border: 1px solid;
+    border-radius: 25px;
+    background-color: white;
+    overflow: hidden;
+    
+}
+.qustion-con{
+    width: calc(100%);
+    height: calc(95vh - 10vh - 10px);
+    border: 1px solid;
+    border-radius: 25px;
+    background-color: white;
+    overflow: hidden;
+    
+}
+.board-con-2{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    margin: 0px;
+    overflow: hidden;
+    overflow-y: auto;
+    max-height: 50vh;
+    padding: 0;
+}
+.qustionbank-text{
+    padding-left: 30px;
+    padding-top: 3px;
+    padding-bottom: 2px;
+}
+.qus-bank{
+    background-color: white;
+}
+.qus-bank:hover{
+    filter: brightness(0.9);
+    
+}
+.qusbank-choose{
+    background-color: rgb(217, 227, 241);
+}
+.qus-btn{
+    background-color: bisque;
+    border: 1px solid;
+    border-radius: 50px;
+    margin: 5px 20px;
+    font-size: 20px;
+    text-align: center;
+    padding: 5px 0px;
+    font-weight: 600;
+}
+.qus-btn:hover{
+    filter: brightness(0.9);
+}
+/* 選項正解套上這個class */
+.qus-btn-correct{
+    background-color: brown !important; 
+    color: white !important;
+}
+.line-clamp-1{
+    display: -webkit-box;
+    -webkit-box-orient: vertical; 
+    text-overflow:hidden;
+    overflow:hidden;
+    -webkit-line-clamp: 1;
+}
+.line-clamp-2{
+    display: -webkit-box;
+    -webkit-box-orient: vertical; 
+    text-overflow:hidden;
+    overflow:hidden;
+    -webkit-line-clamp: 2;
+}
+.line-clamp-3{
+    display: -webkit-box;
+    -webkit-box-orient: vertical; 
+    text-overflow:hidden;
+    overflow:hidden;
+    -webkit-line-clamp: 3;
+}
