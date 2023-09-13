@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>彈幕化遊戲-登入</title>
+    <meta name="version" content="0.45">
+
+    <link rel="stylesheet" href="./assets/css/suite/bootstrap.min.css">
+
+    <script src="./assets/js/suite/jquery.min.js"></script>
+    <script src="./assets/js/suite/jquery-ui.js"></script>
+    <script src="./assets/js/suite/bootstrap.min.js"></script>
+
+    <script src="./assets/js/logIn.js"></script>
+
+
+    <link rel="stylesheet" href="./assets/css/index.css">
+
+
+    <style>
+
+    </style>
+
+    <script>
+
+    </script>
+</head>
+<body>
+    <div class="bg"></div>
+    <main>
+        <div class="student-login">
+            <div class="content" style="padding: 70px 50px;">
+                <div class="information">
+                    <div class="avater" style="background-color: rgb(106, 66, 29 );">
+
+                    </div>
+                    <div class="introduce">
+                        <h1>我是學生</h1>
+                        <hr  style="height: 2px;opacity: 1;">
+                        <div>
+                            <h3>‧ 參與作答</h3>
+                            <h3>‧ 查看作答紀錄</h3>
+                            <h3>‧ 購買外觀特效</h3>
+                            <h3>‧ 排行版</h3>
+                            <h3>‧ 聊天室</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="log-in-form" style="display: none;">
+                    <!-- <div style="display: flex;justify-content: space-between;">
+                        <div class="lig-in-page">登入</div>
+                        <div class="sign-in-page">註冊</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; flex-direction: column;">
+                        <form action="" method="post">
+
+                        </form>
+                    </div> -->
+                    <nav>
+                        <div class="nav nav-tabs justify-content-between" id="nav-tab" role="tablist" style="border-bottom: 0px solid black;">
+                            <button class="nav-link active" id="log-in-home-tab-active" data-bs-toggle="tab" data-bs-target="#log-in-home" 
+                            type="button" role="tab" aria-controls="log-in-home" aria-selected="true"><h2>登入</h2></button>
+                            <button class="nav-link" id="sign-up-profile-tab-non" data-bs-toggle="tab" data-bs-target="#sign-up-profile" 
+                            type="button" role="tab" aria-controls="sign-up-profile" aria-selected="false"><h2>註冊</h2></button>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="log-in-home" role="tabpanel" aria-labelledby="log-in-home-tab">
+                            <form action="./personal.html" method="get" class="theForm" style="background-color: #FFF0C8;">
+                                <input type="text" name="username" id="" placeholder="請輸入使用者名稱">
+                                <input type="password" name="password" id="" placeholder="請輸入密碼">
+                                <button type="submit" class="index-btn" style="background-color: rgb(106, 66, 29 );">送出</button>
+                                <button style="background-color: transparent;border: 0;color: gray;margin-top: 10px;">忘記密碼</button>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="sign-up-profile" role="tabpanel" aria-labelledby="sign-up-profile-tab">
+                            <form action="" method="get" class="theForm" style="background-color: #FFF0C8;">
+                                <input type="text" name="email" id="" placeholder="請輸入電子郵件">
+                                <input type="email" name="email" id="" placeholder="請輸入電子郵件">
+                                <input type="password" name="password" id="" placeholder="輸入密碼">
+                                <input type="password" name="re-password" id="" placeholder="確認密碼">
+                                <button type="submit" class="index-btn" style="background-color: rgb(106, 66, 29 );">送出</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="teacher-login">
+            <div class="content" style="padding: 70px 50px;">
+                <div class="log-in-form" style="display: none;">
+                    <nav>
+                        <div class="nav nav-tabs justify-content-between" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="log-in-home-tab2-active" data-bs-toggle="tab" data-bs-target="#log-in-home2" 
+                            type="button" role="tab" aria-controls="log-in-home2" aria-selected="true"><h2>登入</h2></button>
+                            <button class="nav-link" id="sign-up-profile-tab2-non" data-bs-toggle="tab" data-bs-target="#sign-up-profile2" 
+                            type="button" role="tab" aria-controls="sign-up-profile2" aria-selected="false"><h2>註冊</h2></button>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="log-in-home2" role="tabpanel" aria-labelledby="log-in-home-tab2">
+                            <form action="./personal.html" method="get" class="theForm" style="background-color: #E0F4FF;">
+                                <input type="text" name="email" id="" placeholder="請輸入電子郵件">
+                                <input type="password" name="password" id="" placeholder="請輸入密碼">
+                                <button type="submit" class="index-btn" style="background-color: rgb(19, 78, 111);">送出</button>
+                                <button style="background-color: transparent;border: 0;color: gray;margin-top: 10px;">忘記密碼</button>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="sign-up-profile2" role="tabpanel" aria-labelledby="sign-up-profile-tab2">
+                            <form action="" method="get" class="theForm" style="background-color: #E0F4FF;">
+                                <input type="text" name="username" id="" placeholder="請輸入使用者名稱">
+                                <input type="email" name="email" id="" placeholder="請輸入電子郵件">
+                                <input type="password" name="password" id="" placeholder="輸入密碼">
+                                <input type="password" name="re-password" id="" placeholder="確認密碼">
+                                <button type="submit" class="index-btn" style="background-color: rgb(19, 78, 111);">送出</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="information">
+                    <div class="avater" style="background-color: rgb(19, 78, 111);">
+
+                    </div>
+                    <div class="introduce">
+                        <h1>我是老師</h1>
+                        <hr  style="height: 2px;opacity: 1;">
+                        <div>
+                            <h3>‧ 參與作答</h3>
+                            <h3>‧ 查看學生資料</h3>
+                            <h3>‧ 查看作答紀錄</h3>
+                            <h3>‧ 出題權限</h3>
+                            <h3>‧ 排行榜</h3>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </main>
+
+    
+
+</body>
+</html>fadeInfadeInfadeInfadeOutfadeOutfadeOut
