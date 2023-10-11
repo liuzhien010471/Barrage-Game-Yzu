@@ -1,172 +1,177 @@
 $(document).ready(function(){
-        // 您的題目內容
-        var fileContent = `
-        no:1
-        qus:a,
-        option1:b,
-        option2:c,
-        option3:d,
-        option4:e,
-        answer:1
-        ;
-        no:2
-        qus:a2,
-        option1:b2,
-        option2:c2,
-        option3:d2,
-        option4:e2,
-        answer:2
-        ;
-        no:3
-        qus:a3,
-        option1:b3,
-        option2:c3,
-        option3:d3,
-        option4:e3,
-        answer:3
-        ;
-      `;
-  
-      // 解析題目內容
-      var questions = parseFileContent(fileContent);
-      // console.log(questions);
-  
-      // 解析文本檔內容，將每個題目解析為對象並存入二維陣列中
-      function parseFileContent(content) {
-        var questionBlocks = content.trim().split(';');
-        var questionArray = [];
-  
-        questionBlocks.forEach(function (block) {
+    var fileContent = `
+    no:1
+    qus:a,
+    option1:b,
+    option2:c,
+    option3:d,
+    option4:e,
+    answer:1
+    ;
+    no:2
+    qus:a2,
+    option1:b2,
+    option2:c2,
+    option3:d2,
+    option4:e2,
+    answer:2
+    ;
+    no:3
+    qus:a3,
+    option1:b3,
+    option2:c3,
+    option3:d3,
+    option4:e3,
+    answer:3
+    ;
+    `;
+
+    // fileContent="";
+
+    // 解析題目內容
+    var questions = parseFileContent(fileContent);
+    // console.log(questions);
+
+    // 解析文本檔內容，將每個題目解析為對象並存入二維陣列中
+    function parseFileContent(content) {
+      
+      var questionBlocks = content.trim().split(';');
+      var questionArray = [];
+
+      // if(content == ""){return questionArray;}
+
+      questionBlocks.forEach(function (block) {
           var lines = block.trim().split('\n');
           var question = {};
-  
+
           lines.forEach(function (line) {
-            var parts = line.split(':');
-            if (parts.length === 2) {
-              var key = parts[0].trim();
-              var value = parts[1].trim().replace(",", ""); // 去除值中的逗號
-              question[key] = value;
-            }
+              var parts = line.split(':');
+              if (parts.length === 2) {
+                  var key = parts[0].trim();
+                  var value = parts[1].trim().replace(",", ""); // 去除值中的逗號
+                  question[key] = value;
+              }
           });
-  
+
           if (Object.keys(question).length > 0) {
-            questionArray.push(question);
+              questionArray.push(question);
           }
+      });
+
+      return questionArray;
+    }
+
+    // 顯示解析後的結果
+    var qustionQueue = $("#nowQus-con");
+    // questions.forEach(function (question, index) {
+
+    //   let result = "未完成";//三種狀態，未完成、完成、進行中
+
+    //   var questionDiv = $("<div/>", {
+    //       "class": "qus-text-con row",
+    //       "css": {
+    //           "height": "auto"
+    //       },
+    //       "html": `
+    //           <!-- 自己 -->
+    //           <div class="col row member-username-con member-con">
+    //               <div class="qus-text col-9">${index + 1}.${question.qus}</div>
+    //               <div class="qus-text-state col-3">${result}</div>
+    //           </div>
+    //           <hr>
+    //       `
+    //   });
+
+    //   qustionQueue.append(questionDiv);
+    // });
+
+    //--------出題-------------
+    const qus = $(".qus");
+    const options = $(".options");
+
+    Question();
+
+    //隨機選取題目並顯示在畫面上
+    function Question(){
+      var randomIndex = parseInt(Math.floor(Math.random() * questions.length));
+      qus.text(questions[randomIndex]["qus"]);
+      qus.attr("no",randomIndex+1);
+
+      for(let i=0;i<4;i++){
+          let index = "option" + (i+1).toString();
+          $(options[i]).text(questions[randomIndex][index]);
+      }
+    }
+
+    // options.click(function(event){
+    //   var no = $(this).attr("no");//第幾個選項
+    //   // console.log(no);
+    //   // console.log(questions[parseInt(qus.attr("no"))-1]["answer"]);
+    //   if(no == questions[parseInt(qus.attr("no"))-1]["answer"]){
+    //       console.log("答對了");
+    //   }
+    //   else{
+    //       console.log("答錯了");
+    //   }
+    // });
+
+
+    //------------老師出題-----------------------------
+
+    let qusBank = $(".qus-bank");
+    const qusBankParent = $(".qustionbank-parent");
+    const makeQusCon = $(".make-quetion-con");
+    const qusSubBtn = $("#make-qus-btn-t");
+
+    const qustionInBank = $(".qus-inleft-parent");
+    const qustBankParent = $(".qustionbank-parent");
+    const qusNumText = $(".qusion-number");
+
+
+    //對父母設置事件委託
+    qusBankParent.on("click",".qus-bank",QusBankClick)
+
+    //選擇題庫
+    function QusBankClick(){
+      if($(this).hasClass("qusbank-choose")){
+        return;
+      }
+      else{
+        qusBank.each(function(){
+          qusBank.removeClass("qusbank-choose");
         });
-  
-        return questionArray;
+        $(this).addClass("qusbank-choose");
+
+        //讀取題庫ID
+        nowQusBankId = parseInt($(this).attr("qusbank-id"));
+
+        //重置題目
+        qustionInBank.empty();
+        // console.log(this)
+        qusIndex = 0;
       }
-  
-      // 顯示解析後的結果
-      var outputDiv = document.getElementById("nowQus-con");
-      questions.forEach(function (question, index) {
+    }
 
-        let result = "未完成";//三種狀態，未完成、完成、進行中
 
-        var questionDiv = document.createElement("div");
+    //測試makeQus()用
+    qusSubBtn.click(function(){
+      var qus = makeQus();
+      console.log(qus);
+    });
 
-        questionDiv.className = "qus-text-con row";
-        $(questionDiv).css("height","auto");
-
-        questionDiv.innerHTML = `
-            <!-- 自己 -->
-            <div class="col row member-username-con" id="member-con">
-                <div class="qus-text col-9">${index + 1}.${question.qus}</div>
-                <div class="qus-text-state col-3">${result}</div>
-            </div>
-            <hr>
-        `;
-        
-        outputDiv.appendChild(questionDiv);
-      });
-
-      //--------出題-------------
-      const qus = $(".qus");
-      const options = $(".options");
-
-      Question();
-
-      //隨機選取題目並顯示在畫面上
-      function Question(){
-        var randomIndex = parseInt(Math.floor(Math.random() * questions.length));
-        qus.text(questions[randomIndex]["qus"]);
-        qus.attr("no",randomIndex+1);
-
-        for(let i=0;i<4;i++){
-            let index = "option" + (i+1).toString();
-            $(options[i]).text(questions[randomIndex][index]);
-        }
+    //抓取輸入的題目資料
+    function makeQus(){
+      var qus = {
+        qustion:$("#question-textarea").val(),
+        options1: $(".qus-opation-name").eq(0).val(),
+        options2: $(".qus-opation-name").eq(1).val(),
+        options3: $(".qus-opation-name").eq(2).val(),
+        options4: $(".qus-opation-name").eq(3).val(),
+        correct:$(".qus-opation:checked").val()
       }
 
-      options.click(function(event){
-        var no = $(this).attr("no");//第幾個選項
-        console.log(no);
-        console.log(questions[parseInt(qus.attr("no"))-1]["answer"]);
-        if(no == questions[parseInt(qus.attr("no"))-1]["answer"]){
-            console.log("答對了");
-        }
-        else{
-            console.log("答錯了");
-        }
-      });
-
-
-      //------------老師出題-----------------------------
-
-      let qusBank = $(".qus-bank");
-      const qusBankParent = $(".qustionbank-parent");
-      const makeQusCon = $(".make-quetion-con");
-      const qusSubBtn = $("#make-qus-btn-t");
-
-      const qustionInBank = $(".qus-inleft-parent");
-      const qustBankParent = $(".qustionbank-parent");
-      const qusNumText = $(".qusion-number");
-  
-
-      //對父母設置事件委託
-      qusBankParent.on("click",".qus-bank",QusBankClick)
-
-      //選擇題庫
-      function QusBankClick(){
-        if($(this).hasClass("qusbank-choose")){
-          return;
-        }
-        else{
-          qusBank.each(function(){
-            qusBank.removeClass("qusbank-choose");
-          });
-          $(this).addClass("qusbank-choose");
-
-          //讀取題庫ID
-          nowQusBankId = parseInt($(this).attr("qusbank-id"));
-
-          //重置題目
-          qustionInBank.empty();
-          // console.log(this)
-          qusIndex = 0;
-        }
-      }
-
-
-      //測試makeQus()用
-      qusSubBtn.click(function(){
-        var qus = makeQus();
-        console.log(qus);
-      });
-
-      //抓取輸入的題目資料
-      function makeQus(){
-        var qus = {
-          qustion:$("#question-textarea").val(),
-          options1: $(".qus-opation-name").eq(0).val(),
-          options2: $(".qus-opation-name").eq(1).val(),
-          options3: $(".qus-opation-name").eq(2).val(),
-          options4: $(".qus-opation-name").eq(3).val(),
-          correct:$(".qus-opation:checked").val()
-        }
-
-        return qus;
-      }
+      return qus;
+    }
 
       //調用此函數創建題目dom
     function createQustionDom(qusIndex = 0,qusContent = {
@@ -184,49 +189,13 @@ $(document).ready(function(){
 
       qusContent["qusIndex"]=qusIndex
 
-      // let qusDom =`
-      // <!-- 一個問題 -->
-      // <div class="accordion-item">
-      //     <h2 class="accordion-header" id="heading${qusContent["qusIndex"]}">
-      //     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${qusContent["qusIndex"]}" aria-expanded="true" aria-controls="collapse${qusContent["qusIndex"]}">
-      //       <div class="create-date">
-      //         ${qusContent["createDate"]}
-      //       </div>
-      //       <div class="qus-name">
-      //         ${qusContent["qustion"]}${qusContent["qusIndex"]+1}
-      //       </div>
-      //       <input type="text" class="edit-qus-name-input" placeholder="預設名稱" style="display: none;">
-      //       <input type="submit" class="edit-qus-name-submit" value="更改題目" style="display: none;">
-      //     </button>
-      //     </h2>
-      //     <div id="collapse${qusContent["qusIndex"]}" class="accordion-collapse collapse" aria-labelledby="heading${qusContent["qusIndex"]}" data-bs-parent="#accordionExample">
-      //     <div class="accordion-body">
-      //         <div class="row">
-      //         <div class="qus-btn col">${qusContent["option1"]}</div>
-      //         <div class="qus-btn col">${qusContent["option2"]}</div>
-      //         <div class="qus-btn col">${qusContent["option3"]}</div>
-      //         <div class="qus-btn col">${qusContent["option4"]}</div>
-      //         </div>
-      //     </div>
-      //     </div>
-      // </div>
-      // `;
-
       let qusDom =`
       <!-- 題目 -->
-      <div class="col align-items-center qus-left-con" qus-id="1">
+      <div class="col align-items-center qus-left-con" qus-id="${qusContent["qusIndex"]+1}">
           <div class="col-12 line-clamp-1 qus-name">${qusContent["qustion"]}${qusContent["qusIndex"]+1}</div>
       </div>
       <hr style="margin: 0;">
       `;
-
-      //加入正解變色
-      $(qusDom).find(".qus-btn").each(function(i){
-          if(i == (qusContent["correct"]-1)){
-              $(this).addClass("qus-btn-correct");
-              // console.log($(this).get())
-          }
-      });
 
       qustionInBank.append(qusDom);
 
@@ -284,11 +253,15 @@ $(document).ready(function(){
     }, 3000);
 
     //----------------老師選擇題目並出題--------------
+
     let qusLeftCon = $(".qus-left-con");
     const qusInLeftParent = $(".qus-inleft-parent");
     const submitNewQusToGameBtn = $("#submit-new-qus-to-game");
     // 顯示出題的結果
     let nowQusCon = $("#nowQus-con");
+    // 題目佇列
+    // var qustionQueue = $("#nowQus-con");
+
 
     //選取問題
     function qusLeftConClick(){
@@ -300,20 +273,75 @@ $(document).ready(function(){
     }
     qusInLeftParent.on("click",".qus-left-con",qusLeftConClick);
 
+
     //送出已選取的問題
     submitNewQusToGameBtn.click(SubmitNewQusToGameBtnClick);
-
     function SubmitNewQusToGameBtnClick(event){
       //現在選取
       let nowChooseQus = $(".qus-left-con-choose");
-      let chooseNumber = nowChooseQus.length;
+      let chooseNumber = nowChooseQus.length;//出題數量
+      let choosQusBank = $(".qusbank-choose");//出題的題庫id
+      
+      let nowChooseQusID = new Array(chooseNumber);//紀錄出題所有id
+      nowChooseQus.each(function(index){
+        nowChooseQusID[index] = $(this).attr("qus-id");
+      });
 
-      CreatNowQusDom();
+      let nowChooseQusName = new Array(chooseNumber);//紀錄出題所有名稱
+      nowChooseQus.each(function(index){
+        nowChooseQusName[index] = $(this).text();
+      });
 
-      nowQusCon.append(newQusDom);
+
+      // CreatNowQusDom(nowChooseQus);
 
       //移除選取
       nowChooseQus.removeClass("qus-left-con-choose");
+
+      //送出此結構給後端
+      let chooseQusObj = {
+        number:chooseNumber,//出題數量
+        qusBank:choosQusBank,//出題的題庫id
+        qusIdArray:nowChooseQusID//紀錄出題所有id
+      }
+      
+
+      chooseQusObj = {
+        number:chooseNumber,//出題數量
+        qusBank:choosQusBank,//出題的題庫id
+        qusIdArray:nowChooseQusID,//紀錄出題所有id
+        nowChooseQusName:nowChooseQusName,//出題所有標題
+        questionObj: Array.from({ length: 10 }, () => ({
+          name: "預設名稱",
+          opation1: "選項A",
+          opation2: "選項B",
+          opation3: "選項C",
+          opation4: "選項D",
+          correct: 1
+        }))
+      }
+
+      CreatNowQusDomForEach(chooseQusObj);
+      
+    }
+
+    //把選取題目放入已出題佇列
+    function CreatNowQusDomForEach(chooseQusObj = {
+                                      number:0,//出題數量
+                                      qusBank:"",//出題的題庫id
+                                      qusIdArray:"",//紀錄出題所有id
+                                      nowChooseQusName:"",//出題所有標題
+                                    }){
+      
+      for(let i=0;i<chooseQusObj.number;i++){
+        let question = {
+          name:chooseQusObj.nowChooseQusName[i],
+          index:i,
+          reslut:"未完成"
+        };
+        CreatNowQusDom(question);
+      }
+
     }
 
 
@@ -327,13 +355,71 @@ $(document).ready(function(){
       let newQusDom = `
         <div class="qus-text-con row" style="height:auto>
           <!-- 自己 -->
-          <div class="col row member-username-con" id="member-con">
+          <div class="col row member-username-con member-con" >
               <div class="qus-text col-9">${question["index"]+1}.${question["name"]}</div>
               <div class="qus-text-state col-3">${question["reslut"]}</div>
           </div>
           <hr>
         </div>
       `;
+
+      qustionQueue.append(newQusDom);
+      // $(outputDiv).append(newQusDom);
+
+      QueueToQuestion();
+
+      return newQusDom;
+    }
+
+    
+    //-------------------把佇列放入正在出題------------------------
+
+    
+    //把題目放到選項上，傳入題目
+    function QueueToQuestion(questionObj= {
+                          qusbankid:1,
+                          qusid:1,
+                          name: "預設題目",
+                          opation1: "選項A",
+                          opation2: "選項B",
+                          opation3: "選項C",
+                          opation4: "選項D",
+                          correct: 1
+                      }){
+
+      qus.text(questionObj["name"]);
+      qus.attr("no",questionObj["qusid"]);
+
+      for(let i=0;i<4;i++){
+          let index = "option" + (i+1).toString();
+          $(options[i]).text(questionObj[index]);
+      }
+    }
+
+    //判斷答題正確
+    options.click(function(event){
+      var no = $(this).attr("no");//第幾個選項
+      // console.log(no);
+      // console.log(questions[parseInt(qus.attr("no"))-1]["answer"]);
+      let index = $(this).closest(".qus").attr("no");
+      if(no == questions[parseInt(qus.attr("no"))-1]["answer"]){
+          console.log("答對了");
+          
+          changeQueueState(index,"答對了")
+      }
+      else{
+          console.log("答錯了");
+          changeQueueState(index,"答錯了")
+      }
+
+      
+    });
+
+    //改變狀態，傳入要改變的佇列中題目，1為開始
+    function changeQueueState(index="0",state="未作答"){
+      let queue = $(".member-con");
+      console.log(index);
+      queue.eq(index).find(".qus-text-state").text(state);
     }
 
 

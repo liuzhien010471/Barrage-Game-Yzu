@@ -151,7 +151,7 @@ hr{
     border-radius: 100px;
     background-color: gray;
 }
-#member-con{
+.member-con{
     margin-top: 2px;
     margin-bottom: 2px;
     padding-bottom: 5px;
@@ -270,6 +270,7 @@ hr{
     height: calc(100% - 35px  - 36px);
     overflow-y: auto;
     word-break: break-all;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 .qus-name{
     font-size: 20px;
