@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>彈幕化遊戲 - 教師頁面</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="version" content="0.60">
+
+    <!-- -------------套件載入-------------- -->
+    <link rel="stylesheet" href="./assets/css/suite/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/suite/jquery-ui.css">
+    <link rel="stylesheet" href="./assets/css/suite/switchBtn.css">
+
+    <script src="./assets/js/suite/jquery.min.js"></script>
+    <script src="./assets/js/suite/jquery-ui.js"></script>
+    <script src="./assets/js/suite/bootstrap.min.js"></script>
+    <script src="./assets/js/suite/popper.min.js"></script>
+    <script src="./assets/js/suite/code.createjs.com_1.0.0_createjs.min.js"></script>
+    <!-- --------------套件載入------------- -->
+
+
+    <!-- -----------------專案載入------------------ -->
+    <link rel="stylesheet" href="./assets/css/personal-ui.css">
+    <script src="./assets/js/personal-ui.js"></script>
+
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="container-fluid" id="bg">
+        <!-- ----------------------------上方資訊條---------------------------- -->
+        <div class="row" style="height: calc(31vh - 5vh - 13px);flex-wrap: nowrap;">
+
+            <div class="col-2" style="display: flex;justify-content: center;align-items: center;">
+                <div class="header">
+                    <img src="" alt="" id="profile-photo">
+                </div>
+            </div>
+
+            <div class="col-7">
+                <div class="personal-infor">
+                    <div class="name-and-LV">
+                        <h1>王小明</h1>
+                        <h4 style="font-weight: 400;">LV.14</h4>
+                    </div>
+                    <div class="account-type align-items-center d-flex">
+                        <h4 style="font-weight: 600;" id="permission-title">老師</h4>
+                        <a href="./qustion-bank.html" id="manage-qus-bank-btn"
+                        style="margin: 5px 30px;font-size: 24px;text-decoration: none;">管理題目</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="up-bar-btn-con">
+                    <button id="log-out" style="width: auto;margin-top: 40px;background-color:transparent;border: 0;">
+                        登出
+                    </button>
+                    <div style="display: flex;flex-direction: column;">
+                        <!-- <button id="create-room" class="room-btn">
+                            創建房間
+                        </button> -->
+                        <button id="open-room-list" class="room-btn">
+                            房間列表
+                        </button>
+                        <button id="look-history" class="room-btn">
+                            查看紀錄
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <hr style="height: 3px;color: black;opacity: 0.65;margin-top: 15px;margin-bottom: 10px;">
+        <!------------------------------- 下方 ------------------------------>
+        <div class="row justify-content-center" style="height: calc(69vh - 5vh - 10px);flex-wrap: nowrap;">
+
+            <!-- 創建房間、加入房間 -->
+            <div class="col-12" id="room-list-con">
+                <div id="room-list-board" class="board-con"">
+
+                    <!-- 創建房間時顯示 -->
+                    <div id="create-room-con" style="display: none;">
+                        <form action="" method="get" id="create-room-form">
+                            <div class="create-room-type">
+                                <label>
+                                    <input type="radio" name="room-type" id="class" required>全班房間
+                                </label>
+                                <label>
+                                    <input type="radio" name="room-type" id="team" required>小組房間
+                                </label>
+                                <label >
+                                    <input type="radio" name="room-type" id="personal" required>個人房間
+                                </label>
+                            </div>
+                            <hr class="hr-in-create-room">
+                            <div class="create-room-permissions">
+                                <label>
+                                    <input type="radio" name="room-permissions" required>公開房間
+                                </label>
+                                <label>
+                                    <input type="radio" name="room-permissions" required>私人房間
+                                </label>
+                            </div>
+                            <hr class="hr-in-create-room">
+                            <input class="create-room-name" type="text" placeholder="輸入房間名稱">
+                            <div class="create-room-btn">
+                                <button type="submit" id="create-room-submit" class="btn-in-create-room">創建房間</button>
+                                <button id="back-to-room-list" class="btn-in-create-room">返回列表</button>
+                            </div>
+                            
+                        </form>
+                        <!-- 點擊測試後會在加入房間處出現新的房間 -->
+                        <!-- <button id="create-room-submit">測試按鈕</button> -->
+                        <!-- </div> -->
+                    </div>
+
+                    <!-- 加入房間時顯示 -->
+                    <div class="join-room-con" style="display: block;">
+                        <div class="input-room-id-con" >
+                            <form action="./game.html" method="get" 
+                            style="display: flex;justify-content: center;
+                                align-items: center;width: 100%;padding-left: 0;">
+                                <input id="input-room-id" type="text" value="" placeholder="請輸入房間號碼">
+                                <button id="join-room-submit">
+                                    加入房間
+                                </button>
+                                <button id="create-room2">
+                                    創建房間
+                                </button>
+                            </form>
+                            
+                            
+                        </div>
+                        <hr style="margin: 0;">
+                        <div class="board-con-2" id="can-join-room-con">
+                            <!-- 可加入的房間 -->
+                            <div class="col row align-items-center room-board-con canJoinRoom">
+                                <div class="col-2 room-id" room-id="208143">ID:208143</div>
+                                <div class="col-3 room-name line-clamp-1">今天上網頁</div>
+                                <div class="col-2 room-type">小組</div>
+                                <div class="col-3 room-qus-type">老師出題</div>
+                                <div class="col-2 room-people">18/30</div>
+                            </div>
+                            <hr style="margin: 0;">
+                            <!-- 可加入的房間 -->
+                            <div class="col row align-items-center room-board-con canJoinRoom">
+                                <div class="col-2 room-id" room-id="184522">ID:184522</div>
+                                <div class="col-3 room-name line-clamp-1">沒來就當掉</div>
+                                <div class="col-2 room-type">個人</div>
+                                <div class="col-3 room-qus-type">老師出題</div>
+                                <div class="col-2 room-people">12/30</div>
+                            </div>
+                            <hr style="margin: 0;">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- 遊玩紀錄 -->
+            <div class="col-6"  id="play-record-lsit-con" style="display: none;">
+                <div id="room-board" class="board-con row">
+                    <div id="history-title">
+                        遊玩歷史紀錄
+                    </div>
+                    <div class="board-con-2">
+                        <!-- 對戰紀錄 -->
+                        <div class="col row align-items-center room-board-con roomHistory" room-id="202111">
+                            <div class="col-3 date">2023-06-22</div>
+                            <div class="col-3 room-name line-clamp-1">數學課</div>
+                            <div class="col-2 room-type">全班</div>
+                            <div class="col-2 room-qus-type">老師出題</div>
+                            <div class="col-2 rank">第2名</div>
+                        </div>
+                        <hr style="margin: 0;">
+                        <!-- 對戰紀錄 -->
+                        <div class="col row align-items-center room-board-con roomHistory" room-id="242280">
+                            <div class="col-3 date">2023-06-24</div>
+                            <div class="col-3 room-name line-clamp-1">英文在這邊英文在這邊</div>
+                            <div class="col-2 room-type">個人</div>
+                            <div class="col-2 room-qus-type">老師出題</div>
+                            <div class="col-2 rank">第7名</div>
+                        </div>
+                        <hr style="margin: 0;">
+                        <!-- 對戰紀錄 -->
+                        <div class="col row align-items-center room-board-con roomHistory" room-id="308421">
+                            <div class="col-3 date">2023-06-28</div>
+                            <div class="col-3 room-name line-clamp-1">健康與體育</div>
+                            <div class="col-2 room-type">小組</div>
+                            <div class="col-2 room-qus-type">系統出題</div>
+                            <div class="col-2 rank">第9名</div>
+                        </div>
+                        <hr style="margin: 0;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 遊玩紀錄 -->
+            <div class="col-6" id="replay-con" style="display: none;">
+                <div id="replay-board" class="board-con"">
+                    <div id="history-infor-title">
+                        房間詳細資料
+                    </div>
+                    <!-- 顯示遊玩紀錄的詳細資訊 -->
+                    <div class="replay-information" style="display: block;padding: 20px;">
+                        房間紀錄資訊
+                        <div class="room-name">房間名稱</div>
+                        <div class="room-id">ID:123456</div>
+                        <div class="room-type">小組</div>
+                        <div class="room-qus-type">老師出題</div>
+                        <div class="col-3 room-people">18/30</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
